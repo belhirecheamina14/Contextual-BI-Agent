@@ -1,5 +1,7 @@
 import pandas as pd
 import os
+import json
+from .safe_query_engine import SafeQueryExecutor
 
 # Le chemin est relatif au répertoire racine du projet (Contextual-BI-Agent)
 DATA_FILE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "sales_data.csv")
@@ -14,32 +16,28 @@ def get_data_schema() -> str:
 
 def execute_data_query(pandas_code: str) -> str:
     """
-    Exécute le code pandas généré par le LLM et retourne le résultat.
+    Exécute le code pandas généré par le LLM et retourne le résultat en utilisant SafeQueryExecutor.
 
     Args:
         pandas_code: Le code Python/Pandas à exécuter.
 
     Returns:
-        Le résultat de l'exécution sous forme de chaîne de caractères.
+        Le résultat de l'exécution sous forme de chaîne de caractères JSON.
     """
     try:
         df = pd.read_csv(DATA_FILE_PATH)
-        # Exécution du code pandas dans un environnement sécurisé (simulé ici)
-        # NOTE: Dans un environnement de production, l'exécution de code arbitraire est dangereuse.
-        # Un mécanisme de validation strict ou un moteur de requête dédié serait nécessaire.
-        
-        # Pour ce PoC, nous allons simplement évaluer le code qui utilise 'df'
-        # Exemple de code attendu: "df[df['Region'] == 'North']['Sales'].sum()"
-        
-        # Création d'un dictionnaire d'exécution pour isoler l'exécution
-        exec_globals = {'df': df, 'pd': pd}
-        exec_locals = {}
-        
-        # Exécution du code
-        exec(f"result = {pandas_code}", exec_globals, exec_locals)
-        
-        result = exec_locals.get('result', 'Aucun résultat retourné.')
-        
-        return str(result)
+        executor = SafeQueryExecutor(df)
+        result_dict = executor.execute(pandas_code)
+
+        if result_dict.get("success"):
+            # Formate le résultat en une chaîne JSON pour la cohérence
+            return json.dumps(result_dict["result"], indent=2)
+        else:
+            error_message = result_dict.get('error', 'Une erreur inconnue est survenue.')
+            return f"Erreur lors de l'exécution de la requête Pandas: {error_message}"
+
+    except FileNotFoundError:
+        return f"Erreur: Le fichier de données est introuvable à {DATA_FILE_PATH}"
     except Exception as e:
-        return f"Erreur lors de l'exécution de la requête Pandas: {e}"
+        # Attrape d'autres erreurs potentielles (ex: pannes de SafeQueryExecutor)
+        return f"Erreur critique dans l'exécution de la requête : {e}"
