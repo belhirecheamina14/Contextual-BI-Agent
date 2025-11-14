@@ -1,0 +1,14 @@
+**Définition du Chiffre d'Affaires (CA)**
+Le Chiffre d'Affaires est calculé comme la somme totale des ventes (colonne 'Sales') avant déduction des coûts ou des taxes. Il représente la valeur totale des biens ou services vendus sur une période donnée.
+
+**Définition de la Marge Brute**
+La Marge Brute est la différence entre le Chiffre d'Affaires (Sales) et le Coût des Marchandises Vendues (Cost). Formule : Sales - Cost. Elle indique la rentabilité des produits vendus.
+
+**Règle de Segmentation Client**
+Le segment 'Enterprise' est défini par les commandes de 'Laptop' et 'Monitor' dont la valeur de 'Sales' est supérieure à 10000. Le segment 'SMB' (Small and Medium Business) inclut les commandes de 'Monitor' et 'Keyboard' dont la valeur de 'Sales' est inférieure à 10000. Le segment 'Consumer' est réservé aux commandes de 'Keyboard' uniquement.
+
+**Règle de Calcul des Unités Vendues**
+Les Unités Vendues (Units) représentent le nombre physique d'articles expédiés. Pour les produits 'Laptop', une unité correspond à un seul appareil. Pour les 'Monitor' et 'Keyboard', une unité correspond à un lot de 5.
+
+**Période de Référence**
+Toutes les analyses de données se basent sur les données de Janvier 2024. Les données sont mises à jour quotidiennement.
