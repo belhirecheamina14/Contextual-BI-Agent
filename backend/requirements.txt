@@ -5,3 +5,14 @@ python-dotenv
 openai
 pydantic
 scikit-learn
+asyncpg
+redis
+python-jose
+loguru
+structlog
+prometheus-client
+circuitbreaker
+tenacity
+anthropic
+plotly
+numpy
