@@ -1,0 +1,24 @@
+# Ignorer les répertoires et fichiers spécifiques à Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv
+venv
+env
+
+# Ignorer les fichiers spécifiques à Git
+.git
+.gitignore
+
+# Ignorer les fichiers de logs et de données temporaires
+*.log
+*.tmp
+temp/
+tmp/
+
+# Ignorer les fichiers spécifiques à l'environnement de développement
+.vscode
+.idea
+.DS_Store
